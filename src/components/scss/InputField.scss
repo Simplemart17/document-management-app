@@ -1,0 +1,56 @@
+@import '../../assets/scss/variables.scss';
+@import 'sass-rem';
+
+.input-box-group {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  &__control {
+    position: relative;
+    background-color: $white;
+    width: 100%;
+    height: rem(46px);
+    padding: 0 rem(20px);
+    box-sizing: border-box;
+    border: rem(1px) solid map-get($grey, 1000);
+    border-radius: rem(4px);
+    font-size: rem(15px);
+    font-weight: 300;
+    color: map-get($text-colors, input-box);
+
+    &--error {
+      background-color: $white;
+      background-position: 95% 50%;
+      background-repeat: no-repeat;
+      border: rem(1px) solid map-get($palette, danger);
+    }
+
+    &--not-visible {
+      position: absolute;
+      cursor: pointer;
+      opacity: 0;
+    }
+
+    &__error-text {
+      display: block;
+      margin-top: rem(3px);
+      font-size: rem(14px);
+      font-weight: 300;
+      line-height: rem(18px);
+      color: map-get($palette, danger);
+    }
+  }
+
+  &__textarea-control {
+    @extend .input-box-group__control;
+    width: 100%;
+    height: rem(80px);
+    padding: rem(13px) rem(15px);
+    resize: none;
+
+    &::placeholder {
+      color: map-get($grey, 300);
+    }
+  }
+}
