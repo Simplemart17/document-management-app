@@ -1,0 +1,99 @@
+@import '../../assets/scss/variables';
+@import 'sass-rem';
+
+%generic-btn {
+  background-color: map-get($grey, 100);
+  width: rem(78px);
+  height: rem(28px);
+  border: rem(1px) solid map-get($palette, primary);
+  border-radius: rem(2px);
+  box-shadow: 0 rem(2px) rem(9px) 0 rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  color: map-get($palette, primary);
+  outline: none;
+
+  img {
+    margin-left: rem(8px);
+  }
+}
+
+.inline {
+  position: relative;
+
+  &::before {
+    top: 50%;
+  }
+
+  &.white {
+    .spinner::before {
+      border-top-color: map-get($grey, 100);
+    }
+  }
+}
+
+.button {
+  &.small {
+    @extend %generic-btn;
+  }
+
+  &.back {
+    background-color: $background;
+    width: 2rem;
+    height: 2rem;
+    border: hidden;
+    outline: none;
+  }
+
+  &.disabled {
+    width: 7.625rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: not-allowed;
+    opacity: 0.8;
+  }
+
+  &.regular {
+    @extend %generic-btn;
+    width: 100%;
+    height: rem(40px);
+    padding: rem(10px) rem(20px);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: rem(20px);
+
+    img {
+      margin: 0;
+    }
+
+    &--bold {
+      font-weight: 700;
+    }
+
+    &--light {
+      font-weight: 300;
+    }
+
+    &.blue,
+    &.active {
+      background-color: map-get($palette, primary);
+      color: map-get($grey, 100);
+    }
+  }
+
+  &.yellow {
+    @extend %generic-btn;
+    background-color: map-get($grey, 100);
+    width: rem(108px);
+    height: 2.5rem;
+    border: rem(1px) solid map-get($palette, secondary);
+    border-radius: rem(2px);
+    font-weight: 500;
+    color: map-get($palette, secondary);
+
+    &.active {
+      background-color: map-get($palette, secondary);
+      color: map-get($grey, 100);
+    }
+  }
+}

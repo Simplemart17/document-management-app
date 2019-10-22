@@ -13,7 +13,7 @@
     height: rem(46px);
     padding: 0 rem(20px);
     box-sizing: border-box;
-    border: rem(1px) solid map-get($grey, 1000);
+    border: rem(1px) solid map-get($grey, 400);
     border-radius: rem(4px);
     font-size: rem(15px);
     font-weight: 300;
@@ -24,12 +24,6 @@
       background-position: 95% 50%;
       background-repeat: no-repeat;
       border: rem(1px) solid map-get($palette, danger);
-    }
-
-    &--not-visible {
-      position: absolute;
-      cursor: pointer;
-      opacity: 0;
     }
 
     &__error-text {

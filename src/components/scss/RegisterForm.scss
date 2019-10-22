@@ -1,0 +1,20 @@
+@import '../../assets/scss/variables.scss';
+@import 'sass-rem';
+
+.registration-form {
+  padding: rem(10px 30px 20px 30px);
+
+  &__field {
+    margin-bottom: rem(30px);
+  }
+
+  &__text {
+    font-size: rem(13px);
+    color: map-get($grey, 300);
+
+    &--span {
+      margin-left: rem(10px);
+      color: map-get($palette, primary );
+    }
+  }
+}
