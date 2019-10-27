@@ -6,47 +6,58 @@ import Button from './Button';
 const RegisterForm = (props) => (
   <div className="registration-form">
     <InputField
-      autoFocus
       placeholder="Full Name"
       name="fullname"
       onChange={props.handleChange}
       value={props.value}
+      error={props.nameError}
       className="registration-form__field"
+      showTextOnError={true}
     />
     <InputField
-      autoFocus
       placeholder="Email Address"
       name="email"
       onChange={props.handleChange}
       value={props.value}
+      error={props.emailError}
       type="email"
       className="registration-form__field"
+      showTextOnError={true}
     />
     <InputField
-      autoFocus
       placeholder="Job Title"
       name="jobtitle"
       onChange={props.handleChange}
       value={props.value}
+      error={props.jobTitleError}
       className="registration-form__field"
+      showTextOnError={true}
     />
     <InputField
-      autoFocus
       placeholder="Password"
       name="password"
       onChange={props.handleChange}
       value={props.value}
+      error={props.passwordError}
       type="password"
       className="registration-form__field"
+      showTextOnError={true}
     />
     <InputField
-      autoFocus
       placeholder="Repeat Password"
-      name="rpassword"
+      name="cpassword"
       onChange={props.handleChange}
       value={props.value}
+      error={props.cPasswordError}
       type="password"
+      className="registration-form__field"
+      showTextOnError={true}
     />
+    <div className="registration-form__password-meter">
+      <div
+        className="registration-form__password-meter--fill"
+        data-strength={props.passwordStrength}></div>
+    </div>
     <p className="registration-form__text">Already have an account?
       <span className="registration-form__text--span">Log In</span>
     </p>

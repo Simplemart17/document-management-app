@@ -1,7 +1,11 @@
+/* eslint-disable array-callback-return */
 import React, { Component } from 'react';
+import zxcvbn from 'zxcvbn';
 import './scss/Landing.scss';
 import IndexPageDesc from '../components/IndexPageDesc';
 import RegisterForm from '../components/RegisterForm';
+import { applyValidation } from '../utils/helpers/validationUtils';
+import { validationConfig } from '../utils/helpers/formValidation';
 
 class Landing extends Component {
   state = {
@@ -9,28 +13,92 @@ class Landing extends Component {
     email: '',
     jobtitle: '',
     password: '',
-    rpassword: '',
+    cpassword: '',
+    strength: '',
+    errors: {
+      fullnameError: '',
+      emailError: '',
+      jobtitleError: '',
+      passwordError: '',
+      cpasswordError: ''
+    },
+  }
+
+  validateInputFields = (config = validationConfig) => {
+    const fields = ['fullname', 'email', 'jobtitle', 'password', 'cpassword'];
+
+    fields.map((field) => {
+      const value = this.state[field];
+      const error = applyValidation(value, config[field]);
+      this.setFieldError(`${field}Error`, error);
+    });
+  }
+
+  setFieldError = (field, error) => {
+    const { password, cpassword, errors: { cpasswordError } } = this.state;
+
+    this.setState(prevState => ({
+      errors: {
+        ...prevState.errors,
+        [field]: error,
+      },
+    }));
+    if (password !== cpassword) {
+      console.log(password, cpasswordError, cpassword)
+      this.setState(prevState => ({
+        errors: {
+          ...prevState.errors,
+          cpasswordError: 'Password must match',
+        }
+      }))
+    }
   }
 
   handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    const { password } = this.state;
+
+    this.setState({
+      errors: {
+        ...this.state.errors,
+        [`${name}Error`]: '',
+      },
+      strength: zxcvbn(password).score,
+      [name]: value
+    })
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async(event) => {
     event.preventDefault();
-    const { fullname, email, jobtitle, password, rpassword } = this.state;
+
+    await this.validateInputFields();
+    await this.setState({
+      errors: {
+        ...this.state.errors,
+      },
+    });
+    const hasNoError = Object.values(this.state.errors).every(x => (x === true || x === ''));
+    if (!hasNoError) { return; }
   }
   
   renderRegistrationForm = () => {
+    const {
+      strength,
+      errors: { fullnameError, emailError, jobtitleError, passwordError, cpasswordError }
+  } = this.state;
 
     return (
       <RegisterForm
-      handleChange={this.handleChange}
-      handleSubmit={this.handleSubmit}
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+        nameError={fullnameError}
+        emailError={emailError}
+        jobTitleError={jobtitleError}
+        passwordError={passwordError}
+        cPasswordError={cpasswordError}
+        passwordStrength={strength}
       />
     )
-
   }
   
   render() {
