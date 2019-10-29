@@ -1,0 +1,29 @@
+@import '../../assets/scss/variables.scss';
+@import 'sass-rem';
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  
+  &__form {
+    background-color:map-get($grey, 150);
+  }
+  
+  &__form-area {
+    background-color: $white;
+    width: 60%;
+    height: 80%;
+    margin: 0 auto;
+    margin-top: rem(75px);
+
+    &--header {
+      color: map-get($grey, 600);
+      padding: rem(40px 0 0 30px);
+    }
+  }
+}
+
+.test {
+  background-color: red;
+}

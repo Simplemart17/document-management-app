@@ -1,0 +1,34 @@
+$palette: (primary: #3359DB,
+light: #2956E3,
+lighter: #6487FF,
+danger: #FF5359,
+success: #72D11F,
+success-dark: #10A36D,
+upload-background: #E8ECF9,
+);
+
+$text-colors: (header: #333E44,
+text-header: #5C5A5A,
+content: #333E44,
+navbar-active: #0459E4,
+input-box: #7D7D7D,
+table-hover: #FAFAFA,
+danger: #D0021B,
+page-title-color: #3359DB,
+);
+
+$white: #FFF;
+
+$grey: (100: #DDD,
+150: #ECF1F3,
+200: #F4F8F9,
+300: #7D7D7D,
+400: #D6DEE4
+);
+
+$background: #F6F9FC;
+$boxshadow: 0.0625rem 0.3125rem 1rem 0 rgba(0, 0, 0, 0.19);
+$modal-backdrop: rgba(0, 0, 0, 0.5);
+$empty-msg-backdrop: rgba(125, 125, 125, 0.84);
+$light-modal-backdrop: rgba(0, 0, 0, 0.05);
+$light-dropdown-boxshadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.1);
