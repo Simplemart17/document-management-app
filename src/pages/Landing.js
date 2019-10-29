@@ -1,11 +1,15 @@
 /* eslint-disable array-callback-return */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import zxcvbn from 'zxcvbn';
 import './scss/Landing.scss';
 import IndexPageDesc from '../components/IndexPageDesc';
 import RegisterForm from '../components/RegisterForm';
 import { applyValidation } from '../utils/helpers/validationUtils';
 import { validationConfig } from '../utils/helpers/formValidation';
+import { registerAction } from '../store/auth/index';
+import Loader from '../components/Loader';
 
 class Landing extends Component {
   state = {
@@ -35,7 +39,7 @@ class Landing extends Component {
   }
 
   setFieldError = (field, error) => {
-    const { password, cpassword, errors: { cpasswordError } } = this.state;
+    const { password, cpassword } = this.state;
 
     this.setState(prevState => ({
       errors: {
@@ -44,7 +48,6 @@ class Landing extends Component {
       },
     }));
     if (password !== cpassword) {
-      console.log(password, cpasswordError, cpassword)
       this.setState(prevState => ({
         errors: {
           ...prevState.errors,
@@ -58,18 +61,30 @@ class Landing extends Component {
     const { name, value } = event.target;
     const { password } = this.state;
 
+    name === 'password' ? this.setState({
+      [name]: value,
+      strength: zxcvbn(password).score,
+    }) :
     this.setState({
       errors: {
         ...this.state.errors,
         [`${name}Error`]: '',
       },
-      strength: zxcvbn(password).score,
       [name]: value
     })
   }
 
-  handleSubmit = async(event) => {
-    event.preventDefault();
+  handleSubmit = async(e) => {
+    e.preventDefault();
+    const { register, history } = this.props;
+    const { fullname, email, jobtitle, password } = this.state;
+    const payload = {
+      fullname,
+      email,
+      jobtitle,
+      password
+    }
+
 
     await this.validateInputFields();
     await this.setState({
@@ -79,6 +94,8 @@ class Landing extends Component {
     });
     const hasNoError = Object.values(this.state.errors).every(x => (x === true || x === ''));
     if (!hasNoError) { return; }
+    await register(payload);
+    history.push('/dashboard');
   }
   
   renderRegistrationForm = () => {
@@ -102,6 +119,7 @@ class Landing extends Component {
   }
   
   render() {
+    const { isLoading } = this.props;
     return(
       <div className="wrapper">
         <IndexPageDesc />
@@ -109,10 +127,20 @@ class Landing extends Component {
           <div className="wrapper__form-area">
             <h3 className="wrapper__form-area--header">Signup</h3>
             {this.renderRegistrationForm()}
+            {isLoading && <Loader />}
           </div>
         </div>
       </div>
     )};
 }
 
-export default Landing;
+const mapStateToProps = state => ({
+  registerState: state.auth.data,
+  isLoading: state.auth.isLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+  register: payload => dispatch(registerAction(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Landing));
