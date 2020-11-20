@@ -8,7 +8,7 @@ const IndexPageDesc = () => (
       <h1>Workspace</h1>
     </div>
     <div className="content__text">
-      <p>EDMS is an intelligent document management solution that helps you</p>
+      <p>SimpleDoc is an intelligent document management solution that helps you</p>
       <p>bring all your documents into a place-quickly, easily and securely.</p>
     </div>
     <img src="https://res.cloudinary.com/dq7p8ff2f/image/upload/v1571659326/Assets/illustration.png" alt="page illustration" className="content__image" />
